@@ -32,8 +32,8 @@ jobs:
         # There is no first-party azure/setup-bicep action; install the release
         # binary as the bootstrap skill documents. Pin the version on adoption.
         run: |
-          curl -fsSL https://github.com/Azure/bicep/releases/latest/download/bicep-linux-x64 -o /usr/local/bin/bicep
-          chmod +x /usr/local/bin/bicep
+          sudo curl -fsSL https://github.com/Azure/bicep/releases/latest/download/bicep-linux-x64 -o /usr/local/bin/bicep
+          sudo chmod +x /usr/local/bin/bicep
           bicep --version
       - run: npm ci
       - run: npm run verify
