@@ -5,6 +5,9 @@
 # formatted bytes), then typecheck, then tests with coverage.
 set -euo pipefail
 
+echo "==> restore (.NET packages)"
+dotnet restore api/ContosoNotes.slnx
+
 echo "==> format:check (prettier, dotnet format, bicep format)"
 npm run format:check
 node scripts/dotnet-format-check.mjs

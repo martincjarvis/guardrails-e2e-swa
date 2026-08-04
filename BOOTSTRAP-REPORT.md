@@ -132,6 +132,7 @@ husky - commit-msg script failed (code 1)
 ### 4.4 Secrets gate
 
 **Failing case** — random AWS-shaped secret in JSON:
+<!-- secretlint-disable -->
 ```text
 $ printf '{ "aws_secret_access_key": "9m2vFqz8jQy5G7cR6pW1eTbYs4uHkD3iZxCvN8oL" }\n' > scratch-secret.json
 $ git commit -m "test: fake aws secret for gate demo"
@@ -140,7 +141,8 @@ scratch-secret.json
   2:2  error  [AWSSecretAccessKey] found AWS Secret Access Key: ***  @secretlint/secretlint-rule-preset-recommend > @secretlint/secretlint-rule-aws
 ✖ 1 problem (1 error, 0 warnings, 0 infos)
 husky - pre-commit script failed (code 1)
-```text
+```
+<!-- secretlint-enable -->text
 > Note: secretlint's AWS rule recognises the well-known documentation sample
 > key (`AKIAIOSFODNN7EXAMPLE`/`wJalrXUt…EXAMPLEKEY`) and treats it as a known
 > fake. The demonstration uses a randomly-generated key shape, as a real
