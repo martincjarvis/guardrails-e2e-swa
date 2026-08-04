@@ -32,7 +32,15 @@
     "opencode",
     "mjarvis",
     "noqa",
-    "nothrow"
+    "nothrow",
+    "AKIA",
+    "AKIAIOSFODNN",
+    "Jalr",
+    "EXAMPLEKEY",
+    "semgrep",
+    "lintstagedrc",
+    "forgeboard",
+    "creds"
   ],
   "ignorePaths": [
     "**/node_modules/**",
