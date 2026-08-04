@@ -1,0 +1,16 @@
+{
+  "*.{md,mdx}": ["prettier --write", "markdownlint-cli2", "cspell lint"],
+  "*.{js,mjs,cjs,ts,tsx,jsx}": [
+    "prettier --write",
+    "eslint --max-warnings 0 --no-warn-ignored",
+    "cspell lint",
+    "secretlint --secretlintrc .secretlintrc.json --secretlintignore .secretlintignore"
+  ],
+  "*.{json,jsonc,yml,yaml}": [
+    "prettier --write",
+    "cspell lint",
+    "secretlint --secretlintrc .secretlintrc.json --secretlintignore .secretlintignore"
+  ],
+  "*.cs": ["cspell lint"],
+  "*.bicep": ["cspell lint"]
+}

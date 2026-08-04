@@ -1,0 +1,47 @@
+{
+  "//": "Guardrails record — docs/guardrails.md says what each capability means here. Every capability appears once: either the tool implementing it, or off with why and who. Changes require human review via CODEOWNERS.",
+  "format": {
+    "tool": "prettier (TS/JS/JSON/YAML/MD) + dotnet format (C#) + bicep format (Bicep)",
+    "enforced_at": "pre-commit (staged files via lint-staged), pre-push via verify, CI"
+  },
+  "lint": {
+    "tool": "eslint (TS/JS) + SDK analysers via TreatWarningsAsErrors/AnalysisLevel=latest (C#) + bicep build (Bicep) + markdownlint-cli2 (MD)",
+    "enforced_at": "pre-commit (staged), pre-push via verify, CI"
+  },
+  "typecheck": {
+    "tool": "tsc --noEmit (TS) + dotnet build -warnaserror (C#)",
+    "enforced_at": "pre-push via verify, CI"
+  },
+  "tests": {
+    "tool": "node --test (app) + xunit + Microsoft.NET.Test.Sdk (api)",
+    "enforced_at": "pre-push via verify, CI"
+  },
+  "coverage": {
+    "tool": "c8 --lines=80 (app) + coverlet XPlat Code Coverage with scripts/check-dotnet-coverage.mjs floor at 80% (api)",
+    "enforced_at": "pre-push via verify, CI"
+  },
+  "commit-messages": {
+    "tool": "commitlint + @commitlint/config-conventional",
+    "enforced_at": "commit-msg hook, CI PR range"
+  },
+  "secrets": {
+    "tool": "secretlint (preset-recommend + pattern rule blocking home-dir/UNC paths)",
+    "enforced_at": "pre-commit (staged), pre-push via verify, CI; host push protection per BOOTSTRAP-REPORT"
+  },
+  "spelling": {
+    "tool": "cspell (project dictionary seeded)",
+    "enforced_at": "pre-commit (staged), pre-push via verify, CI"
+  },
+  "ci-verify": {
+    "tool": "GitHub Actions: .github/workflows/guardrails.yml runs npm run verify on every PR",
+    "enforced_at": "CI, required check (per BOOTSTRAP-REPORT)"
+  },
+  "branch-review": {
+    "tool": "GitHub branch protection on main",
+    "enforced_at": "host (commands in BOOTSTRAP-REPORT)"
+  },
+  "supply-chain": {
+    "tool": "Dependabot (npm + nuget + github-actions) + npm min-release-age=7 in .npmrc + CodeQL default setup",
+    "enforced_at": "host tooling"
+  }
+}

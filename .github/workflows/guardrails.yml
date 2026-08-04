@@ -1,0 +1,53 @@
+# Guardrails CI — runs the repository's own verify command on every PR.
+# Same command a developer runs locally; this catches what --no-verify skipped.
+name: guardrails
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: guardrails-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # commitlint and diff-based checks need history
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: package.json
+          cache: npm
+      # .NET 10 from the pinned global.json (10.0.x). setup-dotnet reads it.
+      - uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+      - name: Install Bicep CLI
+        # There is no first-party azure/setup-bicep action; install the release
+        # binary as the bootstrap skill documents. Pin the version on adoption.
+        run: |
+          curl -fsSL https://github.com/Azure/bicep/releases/latest/download/bicep-linux-x64 -o /usr/local/bin/bicep
+          chmod +x /usr/local/bin/bicep
+          bicep --version
+      - run: npm ci
+      - run: npm run verify
+      - name: Coverage on the PR
+        # Platform-native visibility: the run's summary page. The Node c8
+        # summary prints during verify; the .NET coverage figure is printed
+        # by scripts/check-dotnet-coverage.mjs. Both flow to the step log.
+        if: always()
+        run: |
+          {
+            echo "## Coverage"
+            echo '```'
+            cat coverage/coverage-summary.txt 2>/dev/null || true
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+      - name: Lint commit messages on the PR range
+        run: npx --no-install commitlint --from ${{ github.event.pull_request.base.sha }} --to ${{ github.event.pull_request.head.sha }}

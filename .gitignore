@@ -3,3 +3,7 @@ dist/
 bin/
 obj/
 .azure/
+coverage/
+*.coverage
+coverage.*.xml
+*.user

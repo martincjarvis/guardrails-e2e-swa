@@ -1,0 +1,29 @@
+# Dependabot weekly checks. With .NET central package management, the nuget
+# ecosystem must scan the directory holding Directory.Packages.props (root);
+# scoped narrower, Dependabot cannot see the versions and closes its own PRs
+# as obsolete. The commit-message prefix matters: without it, nuget (and some
+# other ecosystems) produce bare "Bump X" subjects that fail the
+# conventional-commit gate on the PR range.
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    commit-message:
+      prefix: "chore"
+      include: "scope"
+  - package-ecosystem: "nuget"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    commit-message:
+      prefix: "chore"
+      include: "scope"
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    commit-message:
+      prefix: "chore"
+      include: "scope"
