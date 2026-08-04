@@ -16,8 +16,13 @@ mkdir -p coverage
   node --test "dist/test/notes.test.js" ) | tee coverage/coverage-summary.txt
 
 echo "==> .NET (api) tests with coverlet coverage"
-dotnet test api/ContosoNotes.slnx \
+# Floor measured from the in-process test project only — a second test
+# project writing cobertura makes the newest-file pick nondeterministic.
+dotnet test api/tests/Api.Tests/Api.Tests.csproj \
   --collect:"XPlat Code Coverage" \
   --settings coverage.runsettings
 echo "==> .NET coverage floor check"
 node scripts/check-dotnet-coverage.mjs
+
+echo "==> E2E journey (real Functions host)"
+dotnet test api/tests/Api.E2E/Api.E2E.csproj

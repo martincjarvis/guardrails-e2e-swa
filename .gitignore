@@ -7,3 +7,4 @@ coverage/
 *.coverage
 coverage.*.xml
 *.user
+local.settings.json

@@ -28,6 +28,8 @@ jobs:
       - uses: actions/setup-dotnet@v4
         with:
           global-json-file: global.json
+      - name: Install Azure Functions Core Tools (E2E journey host)
+        run: npm install -g azure-functions-core-tools@4 --unsafe-perm
       - name: Install Bicep CLI
         # There is no first-party azure/setup-bicep action; install the release
         # binary as the bootstrap skill documents. Pin the version on adoption.

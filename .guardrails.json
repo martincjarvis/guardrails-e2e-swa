@@ -13,7 +13,7 @@
     "enforced_at": "pre-push via verify, CI"
   },
   "tests": {
-    "tool": "node --test (app) + xunit + Microsoft.NET.Test.Sdk (api)",
+    "tool": "node --test (app) + xunit + Microsoft.NET.Test.Sdk (api); E2E journey via the real func host (api/tests/Api.E2E)",
     "enforced_at": "pre-push via verify, CI"
   },
   "coverage": {
