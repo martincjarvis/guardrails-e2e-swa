@@ -1,0 +1,32 @@
+# Deploys with azd on pushes to main. Requires AZURE_* federated credentials
+# configured as repository secrets; runs are skipped in this sample fork.
+name: azure-deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    if: ${{ vars.AZURE_ENV_NAME != '' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: Azure/setup-azd@v2
+      - name: Log in with Azure (Federated Credentials)
+        run: >
+          azd auth login
+          --client-id "${{ vars.AZURE_CLIENT_ID }}"
+          --federated-credential-provider "github"
+          --tenant-id "${{ vars.AZURE_TENANT_ID }}"
+      - name: Provision and deploy
+        run: azd up --no-prompt
+        env:
+          AZURE_ENV_NAME: ${{ vars.AZURE_ENV_NAME }}
+          AZURE_LOCATION: ${{ vars.AZURE_LOCATION }}
+          AZURE_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
