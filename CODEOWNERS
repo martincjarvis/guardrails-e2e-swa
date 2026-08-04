@@ -1,0 +1,23 @@
+# CODEOWNERS — guardrails review surface. Each path maps to the GitHub user
+# who must approve changes to it. The consuming repository's owner replaces
+# the placeholder below before merging the bootstrap PR.
+
+# The guardrails record itself — every capability/opt-out gets human review.
+# This is the entire approval system; nothing else gates a guardrail change.
+.guardrails.json           @martincjarvis
+CODEOWNERS                 @martincjarvis
+docs/guardrails.md         @martincjarvis
+
+# Central .NET enforcement points.
+Directory.Build.props      @martincjarvis
+Directory.Packages.props   @martincjarvis
+global.json                @martincjarvis
+coverage.runsettings       @martincjarvis
+
+# The single verify entry point and its hook wiring.
+package.json               @martincjarvis
+scripts/                   @martincjarvis
+.husky/                    @martincjarvis
+
+# CI that the branch requires.
+.github/workflows/         @martincjarvis
