@@ -1,9 +1,9 @@
 # Bootstrap report — contoso-notes
 
 Repository: [`martincjarvis/guardrails-e2e-swa`](https://github.com/martincjarvis/guardrails-e2e-swa)
-Branch: `guardrails-bootstrap` (one commit `3502df3`), opened against `main`.
-Skill: `repository-bootstrap` v0.1.0 from the `forgeboard-guardrails` plugin,
-applied unattended.
+Branch: `guardrails-bootstrap` (three commits on top of `main`), opened
+against `main`. Skill: `repository-bootstrap` v0.1.0 from the
+`forgeboard-guardrails` plugin, applied unattended.
 
 ## 1. Survey (read-only)
 
